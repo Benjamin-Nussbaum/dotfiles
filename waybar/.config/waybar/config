@@ -5,13 +5,16 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["wlr/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["mpd", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
-    /* "modules-right": ["clock", "battery", "tray"], */
+    // "modules-right": ["battery", "clock", "tray"],
     // Modules configuration
-    "wlr/workspaces": {
-        "on-click": "activate"
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
         /* "disable-scroll": true, */
         /* "all-outputs": true, */
         /* "format": "{name}: {icon}", */
@@ -26,9 +29,9 @@
         /*     "default": "" */
         /* } */
     },
-    /* "hyprland/window"{ */
-    /*   "separate-outputs": true */
-    /* }, */
+    "hyprland/window": {
+      "separate-outputs": true
+    },
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
