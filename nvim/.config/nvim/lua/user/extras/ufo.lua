@@ -8,6 +8,7 @@ local M = {
 }
 
 function M.config()
+  local ufo = require("ufo")
   local builtin = require("statuscol.builtin")
   local cfg = {
     setopt = true,
@@ -27,8 +28,8 @@ function M.config()
   vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
   -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-  vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-  vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+  vim.keymap.set("n", "zR", ufo.openAllFolds)
+  vim.keymap.set("n", "zM", ufo.closeAllFolds)
 
   local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
@@ -58,13 +59,40 @@ function M.config()
     return newVirtText
   end
 
+  -- https://github.com/kiyoon/jupynium.nvim/pull/88
+  local function get_cell_folds(bufnr)
+    local function handleFallbackException(err, providerName)
+      if type(err) == "string" and err:match("UfoFallbackException") then
+        return ufo.getFolds(bufnr, providerName)
+      else
+        return require("promise").reject(err)
+      end
+    end
+    return ufo
+      .getFolds(bufnr, "lsp")
+      :catch(function(err)
+        return handleFallbackException(err, "treesitter")
+      end)
+      :catch(function(err)
+        return handleFallbackException(err, "indent")
+      end)
+      :thenCall(function(ufo_folds)
+        local ok, jupynium = pcall(require, "jupynium")
+        if ok then
+          for _, fold in ipairs(jupynium.get_folds()) do
+            table.insert(ufo_folds, fold)
+          end
+        end
+        return ufo_folds
+      end)
+  end
+
   local ftMap = {
-    -- typescriptreact = { "lsp", "treesitter" },
-    -- python = { "indent" },
+    python = get_cell_folds,
     yaml = "",
   }
 
-  require("ufo").setup({
+  ufo.setup({
     fold_virt_text_handler = handler,
     close_fold_kinds = {},
     -- close_fold_kinds = { "imports", "comment" },

@@ -18,6 +18,7 @@ local M = {
 
 function M.config()
   local cmp = require("cmp")
+  local compare = cmp.config.compare
   local luasnip = require("luasnip")
   require("luasnip/loaders/from_vscode").lazy_load()
   local icons = require("user.icons")
@@ -32,7 +33,9 @@ function M.config()
 
   cmp.setup({
     snippet = {
-      expand = function(args) luasnip.lsp_expand(args.body) end,
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
     },
     mapping = cmp.mapping.preset.insert({
       ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -110,7 +113,8 @@ function M.config()
       end,
     },
     sources = {
-      { name = "nvim_lsp" },
+      { name = "jupynium", priority = 1000 },
+      { name = "nvim_lsp", priority = 100 },
       { name = "luasnip" },
       { name = "cmp_tabnine" },
       { name = "nvim_lua" },
@@ -118,6 +122,21 @@ function M.config()
       { name = "path" },
       { name = "calc" },
       { name = "emoji" },
+    },
+    sorting = {
+      priority_weight = 2,
+      comparators = {
+        compare.offset,
+        compare.exact,
+        -- compare.scopes,
+        compare.score,
+        compare.recently_used,
+        compare.locality,
+        compare.kind,
+        -- compare.sort_text,
+        compare.length,
+        compare.order,
+      },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
