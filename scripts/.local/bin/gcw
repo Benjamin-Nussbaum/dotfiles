@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Git clone worktree
+set -e
+
+url=$1
+reponame=${url##*/}
+dirname=${2:-${reponame%.*}}
+
+mkdir $dirname
+cd "$dirname"
+
+git clone --bare "$url" .bare
+echo "gitdir: ./.bare" > .git
+
+# Needed to fetch remote branches
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+
+git fetch origin
