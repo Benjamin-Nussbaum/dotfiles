@@ -95,7 +95,8 @@
     },
     "cpu": {
         "format": "{usage}% ",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "killall htop || $TERMINAL -1 --title 'htop' -e htop"
     },
     "memory": {
         "format": "{}% "
