@@ -19,12 +19,8 @@ function M.config()
       code_actions.gitsigns,
       code_actions.refactoring,
 
-      diagnostics.luacheck,
+      diagnostics.selene,
       formatting.stylua,
-
-      diagnostics.ruff,
-      formatting.ruff,
-      formatting.reorder_python_imports,
 
       null_ls.builtins.completion.spell,
     },
@@ -33,7 +29,9 @@ function M.config()
         vim.api.nvim_create_autocmd("BufWritePre", {
           group = vim.api.nvim_create_augroup("LspFormatting", {}),
           buffer = bufnr,
-          callback = function() vim.lsp.buf.format() end,
+          callback = function()
+            vim.lsp.buf.format()
+          end,
         })
       end
     end,

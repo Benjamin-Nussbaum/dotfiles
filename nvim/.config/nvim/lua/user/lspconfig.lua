@@ -26,6 +26,7 @@ function M.config()
     "marksman",
     "eslint",
     "rust_analyzer",
+    "taplo",
   }
 
   local default_diagnostic_config = {
@@ -107,6 +108,16 @@ function M.config()
     if client.supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(bufnr, true)
     end
+
+    if client.supports_method("textDocument/formatting") then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("LspFormatting", {}),
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format()
+        end,
+      })
+    end
   end
 
   local common_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -145,6 +156,13 @@ function M.config()
           -- Disable hover in favor of Pyright
           client.server_capabilities.hoverProvider = false
         end,
+        init_options = {
+          settings = {
+            -- Any extra CLI arguments for `ruff` go here.
+            -- args = {},
+            args = { "--fix" },
+          },
+        },
       })
     end
 

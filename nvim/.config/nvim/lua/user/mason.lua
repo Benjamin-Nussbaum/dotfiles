@@ -13,6 +13,7 @@ function M.config()
       "lua_ls",
       "stylua",
       "luacheck",
+      "pyright",
       "ruff_lsp",
       "ruff",
       "reorder-python-imports",
