@@ -42,6 +42,8 @@ setopt HIST_VERIFY              # Don't execute immediately upon history expansi
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 bindkey -M vicmd '^e' edit-command-line
+# Make <C-BS> act as expected
+bindkey '^H' backward-delete-word
 # Make delete key act as expected
 bindkey '\e[3~' delete-char
 bindkey -M vicmd '\e[3~' vi-delete-char
