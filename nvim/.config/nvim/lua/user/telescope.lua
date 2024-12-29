@@ -196,9 +196,9 @@ function M.config()
 
   local install_ok, wk = pcall(require, "which-key")
   if install_ok then
-    wk.register({
-      ["<leader>g"] = { name = "[G]it" },
-      ["<leader>s"] = { name = "[S]earch" },
+    wk.add({
+      { "<leader>g", group = "[G]it" },
+      { "<leader>s", group = "[S]earch" },
     })
   end
 end

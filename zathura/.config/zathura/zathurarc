@@ -13,3 +13,6 @@ map J zoom out
 map i recolor
 map p print
 map g goto top
+
+set synctex true
+set synctex-editor-command "texlab inverse-search -i %{input} -l %{line}"

@@ -13,10 +13,9 @@ function M.config()
       "lua_ls",
       "stylua",
       "luacheck",
-      "pyright",
+      "basedpyright",
       "ruff_lsp",
       "ruff",
-      "reorder-python-imports",
     },
   })
   require("mason-lspconfig").setup({})

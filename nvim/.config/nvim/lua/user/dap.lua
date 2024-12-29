@@ -32,7 +32,14 @@ function M.config()
   nmap("<leader>ds", dap.continue, "Start")
   nmap("<leader>dt", dap.toggle_breakpoint, "Toggle Breakpoint")
   nmap("<leader>du", dap.step_out, "Step Out")
-  nmap("<leader>dU", function() require("dapui").toggle({ reset = true }) end, "Toggle UI")
+  nmap("<leader>dU", function()
+    require("dapui").toggle({ reset = true })
+  end, "Toggle UI")
+
+  local install_ok, wk = pcall(require, "which-key")
+  if install_ok then
+    wk.add({ { "<leader>d", group = "[D]AP" } })
+  end
 end
 
 return M

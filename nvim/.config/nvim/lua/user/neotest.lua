@@ -31,7 +31,7 @@ function M.config()
 
   local install_ok, wk = pcall(require, "which-key")
   if install_ok then
-    wk.register({ ["<leader>t"] = { name = "[T]est" } })
+    wk.add({ { "<leader>t", group = "[T]est" } })
   end
 
   ---@diagnostic disable: missing-fields

@@ -30,7 +30,9 @@ function M.config()
     end
 
     -- Seems bugged at the moment...
-    local function delete() harpoon:list():remove(require("telescope.actions.state").get_selected_entry().value) end
+    local function delete()
+      harpoon:list():remove(require("telescope.actions.state").get_selected_entry().value)
+    end
     require("telescope.pickers")
       .new(require("telescope.themes").get_dropdown({
         prompt_title = "Harpoon",
@@ -58,21 +60,35 @@ function M.config()
   end
 
   nmap("<leader>ha", M.add_file, "[A]dd file")
-  nmap("<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, "[H]arpoon [L]ist")
+  nmap("<leader>hl", function()
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+  end, "[H]arpoon [L]ist")
 
-  nmap("<tab>", function() toggle_telescope(harpoon:list()) end, "[H]arpoon list (telescope)")
+  -- nmap("<tab>", function() toggle_telescope(harpoon:list()) end, "[H]arpoon list (telescope)")
 
-  nmap("<C-h>", function() harpoon:list():select(1) end, "Harpoon 1")
-  nmap("<C-j>", function() harpoon:list():select(2) end, "Harpoon 2")
-  nmap("<C-k>", function() harpoon:list():select(3) end, "Harpoon 3")
-  nmap("<C-l>", function() harpoon:list():select(4) end, "Harpoon 4")
+  nmap("<C-h>", function()
+    harpoon:list():select(1)
+  end, "Harpoon 1")
+  nmap("<C-j>", function()
+    harpoon:list():select(2)
+  end, "Harpoon 2")
+  nmap("<C-k>", function()
+    harpoon:list():select(3)
+  end, "Harpoon 3")
+  nmap("<C-l>", function()
+    harpoon:list():select(4)
+  end, "Harpoon 4")
 
-  nmap("<C-tab>", function() harpoon:list():next({ ui_nav_wrap = true }) end)
-  nmap("<C-S-tab>", function() harpoon:list():prev({ ui_nav_wrap = true }) end)
+  nmap("<C-tab>", function()
+    harpoon:list():next({ ui_nav_wrap = true })
+  end)
+  nmap("<C-S-tab>", function()
+    harpoon:list():prev({ ui_nav_wrap = true })
+  end)
 
   local require_ok, wk = pcall(require, "which-key")
   if require_ok then
-    wk.register({ ["<leader>h"] = { name = "[H]arpoon" } })
+    wk.add({ { "<leader>h", group = "[H]arpoon" } })
   end
 end
 
