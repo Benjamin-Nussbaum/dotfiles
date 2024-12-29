@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -eu
+
+START_THRESH=/sys/class/power_supply/BAT0/charge_start_threshold
+STOP_THRESH=/sys/class/power_supply/BAT0/charge_stop_threshold
+
+set_charge_thresholds() {
+    start=$1
+    stop=$2
+    if [[ $start -ge $stop ]]; then
+        echo "Start must be less than stop"
+        exit 1
+    elif [[ $start -lt 0 ]] || [[ $stop -gt 100 ]]; then
+        echo "Limits must be at most 0-100"
+        exit 1
+    fi
+    echo $start | sudo tee $START_THRESH >/dev/null
+    echo $stop | sudo tee $STOP_THRESH >/dev/null
+    echo "Limits set to" $start $stop
+}
+
+set_charge_mode() {
+    case $1 in
+    plug)
+        set_charge_thresholds 45 50
+        ;;
+    work)
+        set_charge_thresholds 75 80
+        ;;
+    full)
+        set_charge_thresholds 0 100
+        ;;
+    *)
+        echo "usage: setbat [[plug|work|full]|[<start> <stop>]]"
+        ;;
+    esac
+}
+
+if [[ -z "${1+x}" ]]; then
+    # If no arguments, print current thresholds
+    echo "Current thresholds: start = $(cat $START_THRESH), stop = $(cat $STOP_THRESH)"
+    echo "usage: setbat [[plug|work|full]|[<start> <stop>]]"
+elif [[ -z "${2+x}" ]]; then
+    # If only one argument, set thresholds by named mode
+    set_charge_mode $1
+else
+    # Set thresholds directly
+    set_charge_thresholds $1 $2
+fi
