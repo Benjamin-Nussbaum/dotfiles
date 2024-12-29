@@ -12,4 +12,6 @@ export QT_QPA_PLATFORM=wayland
 export QT_QPA_PLATFORMTHEME=gtk3
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export HYPRLAND_TRACE=1
+
 exec systemd-cat --identifier=hyprland /usr/bin/Hyprland $@

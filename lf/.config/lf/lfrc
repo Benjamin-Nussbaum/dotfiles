@@ -10,14 +10,14 @@ set scrolloff 10
 set icons
 set period 1
 set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
-set autoquit on
+set autoquit true
 
 # cmds/functions
 cmd open ${{
   case $(file --mime-type "$(readlink -f $f)" -b) in
     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
     image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
-    text/*|application/json|inode/x-empty) $EDITOR $fx;;
+    text/*|application/json|application/javascript|inode/x-empty) $EDITOR $fx;;
     image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
     image/svg+xml) display -- $f ;;
     image/*) imv $PWD ;;
@@ -31,6 +31,7 @@ cmd open ${{
     application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
     application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
     application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+    application/x-sc) sc-im $f ;;
     *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
    esac
  }}
