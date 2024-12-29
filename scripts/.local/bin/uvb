@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+scriptname="update-uv-deps.py"
+cp ~/.local/bin/$scriptname .
+uv run $scriptname
+rm $scriptname
