@@ -1,0 +1,24 @@
+[branch]
+	sort = -committerdate
+[core]
+	fsmonitor = true
+[diff]
+	algorithm = histogram
+[init]
+	defaultBranch = master
+[log]
+	date = iso
+[merge]
+	conflictstyle = zdiff3
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[rebase]
+	autosquash = true
+	autostash = true
+	missingCommitsCheck = error
+	updateRefs = true
+[rerere]
+	enabled = true
+	autoupdate = true
