@@ -6,11 +6,11 @@ url=$1
 reponame=${url##*/}
 dirname=${2:-${reponame%.*}}
 
-mkdir $dirname
+mkdir "$dirname"
 cd "$dirname"
 
 git clone --bare "$url" .bare
-echo "gitdir: ./.bare" > .git
+echo "gitdir: ./.bare" >.git
 
 # Needed to fetch remote branches
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
