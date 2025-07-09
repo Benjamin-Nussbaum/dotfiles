@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if ! test -t 0; then
+    # filenames piped from stdin
+    mapfile -t tocopy < <(cat)
+elif test -n "$1"; then
+    # filenames from script arguments
+    tocopy=("$@")
+fi
+
+if test -z "${tocopy[@]}"; then
+    echo "Usage:
+        yf file1 [file2 file3 ...]
+        echo file1 [file2 file3 ...] | yf"
+    exit 1
+fi
+
+for file in "${tocopy[@]}"; do
+    echo "file://$(realpath "$file")"
+done | wl-copy -n -t text/uri-list
