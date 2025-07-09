@@ -1,0 +1,9 @@
+#!/bin/sh
+
+seconds="$1"
+stop="$(($(date +%s) + seconds))"
+while test "$(date +%s)" -lt "$stop"; do
+    remaining="$((stop - $(date +%s)))"
+    printf '%s\r' "$(date -ud "@$remaining" +%H:%M:%S)"
+    sleep 0.1
+done
