@@ -1,0 +1,11 @@
+#!/bin/sh
+output="$(date '+%y%m%d-%H%M-%S').png"
+
+case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | wofi -d -L 7 -i -p "Screenshot which area?")" in
+"a selected area") grim -g "$(slurp -d)" -o "${output}" ;;
+"current window") notify-send -t 5000 "Not currently implemented" "maybe try parsing the output of hyprctl activewindow" ;;
+"full screen") grim -o pic-full-"${output}" ;;
+"a selected area (copy)") grim -g "$(slurp -d)" - | wl-copy ;;
+"current window (copy)") notify-send -t 5000 "Not currently implemented" "maybe try parsing the output of hyprctl activewindow" ;;
+"full screen (copy)") grim - | wl-copy ;;
+esac
