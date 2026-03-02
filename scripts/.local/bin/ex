@@ -1,0 +1,15 @@
+#!/bin/sh
+# Edit the executable script given by $1
+set -eu
+
+test $# -eq 0 && echo "Usage: ex [scriptname]" && exit 1
+
+path="${SCRIPTS}/$1"
+
+# Create script if it doesn't exist
+if test ! -e "$path"; then
+    printf "#!/bin/sh\nset -eu\n\n" >"$path"
+    chmod +x "$path"
+fi
+
+exec "$EDITOR" +4 "$path"

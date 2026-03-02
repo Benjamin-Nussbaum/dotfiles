@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euo pipefail
+
+DIRS=(
+    "$REPOS"/github.com/*
+    "$HOME/Documents"
+    "$HOME"
+    "$HOME/Documents/research"
+    "$HOME/Documents/notes"
+)
+
+selected=$(
+    fd . "${DIRS[@]}" --type=dir --max-depth 1 |
+        sed "s,^$HOME/,," |
+        fzf --scheme=path --margin 10% --color="bw"
+)
+
+printf "%s\n" "$HOME/$selected"

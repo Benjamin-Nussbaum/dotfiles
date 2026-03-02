@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+
+projdir="${1:-}"
+
+if test -z "$projdir"; then
+    echo "to: open an existing tmux session or create a new one from
+    the supplied directory
+
+Usage:
+        to [tmux-session-name | directory]"
+    exit 1
+fi
+
+projname="$(basename "$projdir" | tr -d .)"
+
+tmux has-session -t "$projname" ||
+    tmux new-session -ds "$projname" -c "$(realpath "$projdir")"
+
+tmux attach-session -t "$projname" 2>/dev/null ||
+    tmux switch-client -t "$projname"

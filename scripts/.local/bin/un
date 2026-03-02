@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+set -euo pipefail
+
+declare -A negation
+
+negation["True"]="False"
+negation["False"]="True"
+negation["true"]="false"
+negation["false"]="true"
+negation["T"]="F"
+negation["F"]="T"
+negation["t"]="f"
+negation["f"]="t"
+negation["Yes"]="No"
+negation["No"]="Yes"
+negation["yes"]="no"
+negation["no"]="yes"
+negation["Y"]="N"
+negation["N"]="Y"
+negation["y"]="n"
+negation["n"]="y"
+negation["On"]="Off"
+negation["Off"]="On"
+negation["on"]="off"
+negation["off"]="on"
+negation["0"]="1"
+negation["1"]="0"
+negation["+"]="-"
+negation["-"]="+"
+negation["/"]="\\"
+negation["\\"]="/"
+
+test $# -eq 0 && exit 1
+
+negated="${negation[$1]:-}"
+
+if test -z "$negated"; then
+    printf "%s" "$1"
+    exit 1
+fi
+
+printf "%s" "$negated"

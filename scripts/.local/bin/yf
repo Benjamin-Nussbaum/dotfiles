@@ -1,9 +1,10 @@
 #!/bin/bash
+set -euo pipefail
 
 if ! test -t 0; then
     # filenames piped from stdin
     mapfile -t tocopy < <(cat)
-elif test -n "$1"; then
+else
     # filenames from script arguments
     tocopy=("$@")
 fi

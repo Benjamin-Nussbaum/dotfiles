@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Git clone worktree
-set -e
+set -eu
 
 url=$1
 reponame=${url##*/}
 dirname=${2:-${reponame%.*}}
 
-mkdir "$dirname"
+mkdir -p "$dirname"
 cd "$dirname"
 
 git clone --bare "$url" .bare
