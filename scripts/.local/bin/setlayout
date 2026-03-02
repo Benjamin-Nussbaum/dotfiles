@@ -1,0 +1,18 @@
+#!/bin/sh
+# Set the tiling layout for the active Hyprland workspace
+# See binds in ~/.config/hypr/hyprland.conf for switching between layouts
+
+set -eu
+
+data=$(hyprctl activeworkspace -j)
+currentlayout=$(echo "$data" | jq '.tiledLayout' | tr -d '"')
+activeworkspace=$(echo "$data" | jq '.id')
+
+test $# -eq 0 &&
+    notify-send "Layout for workspace $activeworkspace is set to $currentlayout" &&
+    echo "$currentlayout" &&
+    exit 0
+
+hyprctl keyword "workspace=$activeworkspace, layout:$1" &&
+    notify-send "Set layout for workspace $activeworkspace to $1" &&
+    echo "$1"
