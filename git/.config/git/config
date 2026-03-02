@@ -1,19 +1,31 @@
+[column]
+    ui = auto
 [branch]
-	sort = -committerdate
-[core]
-	fsmonitor = true
-[diff]
-	algorithm = histogram
-[init]
-	defaultBranch = master
+    sort = -committerdate
+[tag]
+    sort = version:refname
 [log]
 	date = iso
-[merge]
-	conflictstyle = zdiff3
-[pull]
-	rebase = true
+[init]
+	defaultBranch = master
+[diff]
+	algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[grep]
+    patternType = perl
 [push]
 	autoSetupRemote = true
+    followTags = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[pull]
+	rebase = true
+[merge]
+	conflictstyle = zdiff3
 [rebase]
 	autosquash = true
 	autostash = true
@@ -22,3 +34,10 @@
 [rerere]
 	enabled = true
 	autoupdate = true
+[core]
+	fsmonitor = true
+
+[alias]
+    graph = log --graph --branches --oneline --decorate
+    ; l = log --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    l = log --graph --branches --pretty=format:'%C(auto)%h %d %s %Cgreen(%cr) %C(bold blue)<%an>'
