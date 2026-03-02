@@ -1,0 +1,19 @@
+.*
+!.ssh
+!.dotfiles
+!.dotfiles/**
+.dotfiles/.*
+
+# rust
+target
+debug
+
+# python
+*venv*
+lib
+_*
+
+# extra junk
+.bak
+*backup*
+database

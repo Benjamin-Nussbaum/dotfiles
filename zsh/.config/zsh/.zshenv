@@ -4,8 +4,24 @@
 typeset -U path PATH
 path=(~/.local/bin $path)
 export PATH
+
+
+# General
+export DOTFILES="$HOME/.dotfiles"
+export SCRIPTS="$DOTFILES/scripts/.local/bin"
+export USER="${USER:-$(whoami)}"
+export GITUSER="Benjamin-Nussbaum"
+export REPOS="$HOME/Repos"
+export GHREPOS="$REPOS/github.com/$GITUSER"
+
+export WORKREPOS=($REPOS/github.com/{KwiatLab,PublicQuantumNetwork})
+
+typeset -U findpath FINDPATH
+findpath=($GHREPOS $WORKREPOS $HOME ~/Documents/research ~/Documents/notes ~/Documents)
+export findpath
+
 typeset -U cdpath CDPATH
-cdpath=(. ~/Documents/research ~/Documents ~/Videos $HOME)
+cdpath=(. .. $findpath)
 export CDPATH
 
 # Programs

@@ -25,6 +25,7 @@ setopt INTERACTIVE_COMMENTS     # Allow comments even in interactive shells.
 HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 HISTSIZE=10000000
 SAVEHIST=10000000
+HISTIGNORE="exit:cd:ls:bg:fg:history:f:fd:vim:nvim"
 setopt EXTENDED_HISTORY         # Write to $HISTFILE in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY_TIME  # Write to $HISTFILE when the command finishes, not when the shell exits.
 setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history.
@@ -51,3 +52,4 @@ bindkey -M visual '\e[3~' vi-delete
 
 bindkey	'^ ' autosuggest-accept
 bindkey -s '^x' '^usource ${ZDOTDIR:-$HOME}/.zshrc\n'
+bindkey -s '^o' '^uto $(fp) >/dev/null\n'
